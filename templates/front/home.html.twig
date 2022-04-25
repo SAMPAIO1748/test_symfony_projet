@@ -1,0 +1,107 @@
+{% extends "base.html.Twig" %}
+
+{% block body %}
+
+	<header>
+
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">HouseHotel</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="{{ path('home') }}">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Chambre</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Restaurant</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link">Spa</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link">Réservation</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link">Avis</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link">L'hôtel</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link">Actualités</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link">Contact</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+	</header>
+
+	<main>
+
+		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+			</div>
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img src="{{ asset('medias/' ~ sliders[0].photo) }}" class="d-block w-100" alt="photo">
+				</div>
+				{% for slider in sliders | slice(1,) %}
+					<div class="carousel-item">
+						<img src="{{ asset('medias/' ~ slider.photo) }}" class="d-block w-100" alt="...">
+					</div>
+
+				{% endfor %}
+
+			</div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
+
+		<div class="flex center">
+			<a href="#" class="btn btn-primary margin">House Hotel | Découvrez nos chambres</a>
+		</div>
+
+		<div class="w50">
+			<div class="w30">
+				<img src="" alt="chambre">
+				<h2>Chambre</h2>
+				<span>Vener découvrir nos chambres</span>
+				<a href="#" class="btn btn-secondary">Découvrir nos chambre</a>
+			</div>
+			<div class="w30">
+				<img src="" alt="restaurant">
+				<h2>Restaurant</h2>
+				<span>Vener découvrir nos restaurant</span>
+				<a href="#" class="btn btn-secondary">Découvrir nos restuarants</a>
+			</div>
+			<div class="w30">
+				<img src="" alt="spa">
+				<h2>SPA</h2>
+				<span>Vener découvrir nos spa</span>
+				<a href="#" class="btn btn-secondary">Découvrir nos spa</a>
+			</div>
+		</div>
+
+	</main>
+
+
+{% endblock %}

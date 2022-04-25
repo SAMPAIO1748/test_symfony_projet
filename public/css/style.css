@@ -2,3 +2,27 @@ img{
     width: 200px;
     height: auto;
 }
+
+.margin{
+    margin: 1% auto;
+}
+
+.flex{
+    display: flex;
+}
+
+.center{
+    justify-content: center;
+}
+
+.w50{
+    width: 50%;
+    margin: 0% auto;
+}
+
+.w30{
+    width: 33%;
+    float: left;
+    margin: 0 auto;
+    text-align: center;
+}
