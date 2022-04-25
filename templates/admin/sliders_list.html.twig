@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<table>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Photo</th>
+				<th>Ordre</th>
+				<th>Date d'enregistrement</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for slider in sliders %}
+				<tr>
+					<td>{{slider.id}}</td>
+					<td>
+						<img src="{{ asset('medias/' ~ slider.photo) }}" alt="{{slider.ordre}}">
+					</td>
+					<td>{{ slider.ordre }}</td>
+					<td>{{ slider.dateEnregistrement | date("d/m/Y") }}</td>
+					<td>
+						<a href="{{ path("admin_show_slider", {'id' : slider.id}) }}">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</a>
+						<a href="#">
+							<i class="fa-solid fa-pen-to-square"></i>
+						</a>
+						<a href="#">
+							<i class="fa-solid fa-trash-can"></i>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

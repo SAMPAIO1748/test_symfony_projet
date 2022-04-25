@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<table>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Photo</th>
+				<th>Ordre</th>
+				<th>Date d'enregistrement</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{slider.id}}</td>
+				<td>
+					<img src="{{asset('medias/' ~ slider.photo)}}" alt="{{slider.ordre}}" srcset="">
+				</td>
+				<td>{{slider.ordre}}</td>
+				<td>
+					{{ slider.dateEnregistrement | date("d/m/Y")}}</td>
+			</tr>
+		</tbody>
+	</table>
+
+{% endblock %}
