@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<table>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Titre</th>
+				<th>Description (courte)</th>
+				<th>Description (longue)</th>
+				<th>Photo</th>
+				<th>Prix (journalier)</th>
+				<th>Date d'enregitrement</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ chambre.id }}</td>
+				<td>{{ chambre.titre }}</td>
+				<td>{{ chambre.descriptionCourte }}</td>
+				<td>{{ chambre.descriptionLongue}}</td>
+				<td><img src="{{ asset('medias/' ~ chambre.photo) }}" alt="{{ chambre.titre }}"></td>
+				<td>{{ chambre.prixJournalier }}</td>
+				<td>{{ chambre.dateEnregistrement | date("d/m/Y") }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+{% endblock %}
