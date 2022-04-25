@@ -77,4 +77,62 @@ class AdminSliderController extends AbstractController
 
         return $this->render("admin/slider_form.html.twig", ['sliderForm' => $sliderForm->createView()]);
     }
+
+    /**
+     * @Route("admin/update/slider/{id}", name="admin_update_slider")
+     */
+    public function adminUpdateSlider(
+        $id,
+        SliderRepository $sliderRepository,
+        EntityManagerInterface $entityManagerInterface,
+        Request $request,
+        SluggerInterface $sluggerInterface
+    ) {
+        $slider = $sliderRepository->find($id);
+
+        $sliderForm = $this->createForm(SliderType::class, $slider);
+
+        $sliderForm->handleRequest($request);
+
+        if ($sliderForm->isSubmitted() && $sliderForm->isValid()) {
+
+            $imageFile = $sliderForm->get('photo')->getData();
+
+            if ($imageFile) {
+                $originalFileName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+                $safeFileName = $sluggerInterface->slug($originalFileName);
+
+                $newFileName = $safeFileName . "-" . uniqid() . "." . $imageFile->guessExtension();
+
+                $imageFile->move(
+                    $this->getParameter('images_directory'),
+                    $newFileName
+                );
+
+                $slider->setPhoto($newFileName);
+            }
+
+            $entityManagerInterface->persist($slider);
+            $entityManagerInterface->flush();
+
+            return $this->redirectToRoute('admin_list_slider');
+        }
+
+        return $this->render("admin/slider_form.html.twig", ['sliderForm' => $sliderForm->createView()]);
+    }
+
+    /**
+     * @Route("admin/delete/slider/{id}", name="admin_delete_slider")
+     */
+    public function adminDeletetSlider($id, SliderRepository $sliderRepository, EntityManagerInterface $entityManagerInterface)
+    {
+        $slider = $sliderRepository->find($id);
+
+        $entityManagerInterface->remove($slider);
+
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute('admin_list_slider');
+    }
 }
