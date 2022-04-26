@@ -35,7 +35,7 @@
 						<a href="{{ path('admin_show_commande', {'id' : commande.id }) }}">
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</a>
-						<a href="#">
+						<a href="{{ path('admin_update_commande', {'id' : commande.id }) }}">
 							<i class="fa-solid fa-pen-to-square"></i>
 						</a>
 						<a href="#">
@@ -46,4 +46,6 @@
 			{% endfor %}
 		</tbody>
 	</table>
+
+	<a class="btn btn-success" href="{{ path('admin_create_commande') }}">Ajouter une commande</a>
 {% endblock %}
