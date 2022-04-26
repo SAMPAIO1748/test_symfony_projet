@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ChambreRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,16 @@ class Chambre
      * @ORM\Column(type="date")
      */
     private $date_enregitrement;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commande::class, mappedBy="chambre")
+     */
+    private $commandes;
+
+    public function __construct()
+    {
+        $this->commandes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +132,36 @@ class Chambre
     public function setDateEnregitrement(\DateTimeInterface $date_enregitrement): self
     {
         $this->date_enregitrement = $date_enregitrement;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setChambre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getChambre() === $this) {
+                $commande->setChambre(null);
+            }
+        }
 
         return $this;
     }

@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<table>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Chambre</th>
+				<th>Date d'arrivée</th>
+				<th>Date de départ</th>
+				<th>Prix total</th>
+				<th>Prénom</th>
+				<th>Nom</th>
+				<th>Téléphone</th>
+				<th>Email</th>
+				<th>Date d'enregistrement</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ commande.id }}</td>
+				<td>{{ commande.chambre.titre }}</td>
+				<td>{{ commande.dateArrivee | date('d/m/Y') }}</td>
+				<td>{{ commande.dateDepart | date('d/m/Y')  }}</td>
+				<td>{{ commande.prixTotal }}</td>
+				<td>{{ commande.prenom }}</td>
+				<td>{{ commande.nom }}</td>
+				<td>{{ commande.telephone }}</td>
+				<td>{{ commande.email }}</td>
+				<td>{{commande.dateEnregistrement | date('d/m/Y') }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+{% endblock %}
