@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<table>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Pseudo</th>
+				<th>Prenom</th>
+				<th>Nom</th>
+				<th>Email</th>
+				<th>Rôle</th>
+				<th>Date d'enregitrement</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ user.id }}</td>
+				<td>{{ user.pseudo }}</td>
+				<td>{{ user.prenom }}</td>
+				<td>{{ user.nom }}</td>
+				<td>{{ user.email }}</td>
+				<td>{{ user.roles[0] }}</td>
+				<td>
+					{{user.dateEnregistrement | date('d/m/Y')}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+{% endblock %}
