@@ -98,4 +98,17 @@ class AdminCommandeController extends AbstractController
 
         return $this->render("admin/commande_form.html.twig", ["commandeForm" => $commandeForm->createView()]);
     }
+
+    /**
+     * @Route("admin/delete/commande/{id}", name="admin_delete_commande")
+     */
+    public function adminDeleteCommande($id, CommandeRepository $commandeRepository, EntityManagerInterface $entityManagerInterface)
+    {
+        $commande = $commandeRepository->find($id);
+
+        $entityManagerInterface->remove($commande);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute("admin_list_commande");
+    }
 }
