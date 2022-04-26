@@ -66,4 +66,55 @@ class AdminUserController extends AbstractController
 
         return $this->render('admin/user_form.html.twig', ['userForm' => $userForm->createView()]);
     }
+
+    /**
+     * @Route("admin/update/user/{id}", name="admin_update_user")
+     */
+    public function adminUpadteUser(
+        $id,
+        UserRepository $userRepository,
+        EntityManagerInterface $entityManagerInterface,
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasherInterface
+    ) {
+        $user = $userRepository->find($id);
+
+        $userForm = $this->createForm(UserType::class, $user);
+
+        $userForm->handleRequest($request);
+
+        if ($userForm->isSubmitted() && $userForm->isValid()) {
+            $user->setRoles(["ROLE_ADMIN"]);
+            $user->setDateEnregistrement(new \DateTime("NOW"));
+
+            $plainPassword = $userForm->get('password')->getData();
+
+            $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $plainPassword);
+
+            $user->setPassword($hashedPassword);
+
+            $entityManagerInterface->persist($user);
+            $entityManagerInterface->flush();
+
+            return $this->redirectToRoute("admin_list_user");
+        }
+
+        return $this->render('admin/user_form.html.twig', ['userForm' => $userForm->createView()]);
+    }
+
+    /**
+     * @Route("admin/delete/user/{id}", name="admin_delete_user")
+     */
+    public function adminDeleteUser(
+        $id,
+        EntityManagerInterface $entityManagerInterface,
+        UserRepository $userRepository
+    ) {
+        $user = $userRepository->find($id);
+
+        $entityManagerInterface->remove($user);
+        $entityManagerInterface->flush();
+
+        return $this->redirectToRoute("admin_list_user");
+    }
 }
