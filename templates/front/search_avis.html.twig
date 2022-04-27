@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<h1>Avis selon le filtre :
+		{{ term }}</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Sujet</th>
+				<th>Contenu</th>
+				<th>Nom</th>
+				<th>Prenom</th>
+				<th>Email</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for avi in avis %}
+				<tr>
+					<td>{{ avi.id }}</td>
+					<td>{{ avi.sujet }}</td>
+					<td>{{ avi.message }}</td>
+					<td>{{ avi.nom }}</td>
+					<td>{{ avi.prenom }}</td>
+					<td>{{ avi.email }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

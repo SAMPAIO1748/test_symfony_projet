@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<form action="{{ path('avis_search') }}" method="get">
+		<label for="search">Filtrer les avis</label>
+		<select name="search" id="search">
+			<option value="Hôtel">Hôtel</option>
+			<option value="Chambre">Chambre</option>
+			<option value="Restaurant">Restaurant</option>
+		</select>
+		<input type="submit" value="Filtrer" class="btn btn-primary">
+	</form>
+
+	<h1>Liste des avis</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Sujet</th>
+				<th>Contenu</th>
+				<th>Nom</th>
+				<th>Prénom</th>
+				<th>Email</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for avi in avis %}
+				<tr>
+					<td>{{ avi.id }}</td>
+					<td>{{ avi.sujet }}</td>
+					<td>{{ avi.message }}</td>
+					<td>{{ avi.nom }}</td>
+					<td>{{ avi.prenom }}</td>
+					<td>{{ avi.email }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	{{form(aviForm)}}{% endblock %}
