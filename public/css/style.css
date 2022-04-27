@@ -26,3 +26,29 @@ img{
     margin: 0 auto;
     text-align: center;
 }
+
+.w33{
+    width: 40%;
+    margin: 1% auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.w50{
+    width: 45%;
+}
+
+.w100{
+    width: 100%;
+    height: auto;
+}
+
+.w60{
+    width: 60%;
+    margin: 2% auto;
+}
+
+form{
+    width: 60%;
+    margin: 1% auto;
+}

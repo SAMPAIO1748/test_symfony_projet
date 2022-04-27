@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<img src="{{ asset("medias/" ~ chambre.photo) }}" alt="{{ chambre.titre }}" class="w100">
+
+	<div class="w60">
+		<h2>Equipements et informations</h2>
+		<p>{{ chambre.descriptionLongue }}</p>
+	</div>
+
+	<br><br>
+	<hr class="w60">
+
+	{{form_start(commandeForm)}}
+
+	<div class="w50 mt-3">
+		{{form_label(commandeForm.date_arrivee, "Date d'arrivée : ", {'label_attr' : {'class' : 'input-group-text', 'id' : 'basic-addon1'} } ) }}
+		{{form_widget(commandeForm.date_arrivee,{'attr' : {'class ' : 'form-control'} } ) }}
+	</div>
+
+	<div class="w50 mt-3">
+		{{form_label(commandeForm.date_depart, "Date de départ : ", {'label_attr' : {'class' : 'input-group-text', 'id' : 'basic-addon1'} } )}}
+		{{form_widget(commandeForm.date_depart,{'attr' : {'class ' : 'form-control'} } )}}
+	</div>
+	<div class="w50 mt-3">
+		{{form_label(commandeForm.prenom, "Prénom : ", {'label_attr' : {'class' : 'input-group-text', 'id' : 'basic-addon1'} } )}}
+		{{form_widget(commandeForm.prenom,{'attr' : {'class ' : 'form-control'} } )}}
+
+	</div>
+	<div class="w50 mt-3">
+		{{form_label(commandeForm.nom, "Nom : ", {'label_attr' : {'class' : 'input-group-text', 'id' : 'basic-addon1'} } )}}
+		{{form_widget(commandeForm.nom,{'attr' : {'class ' : 'form-control'} } )}}
+	</div>
+
+	<div class="w50 mt-3">
+		{{form_label(commandeForm.email, "Email : ", {'label_attr' : {'class' : 'input-group-text', 'id' : 'basic-addon1'} } )}}
+		{{form_widget(commandeForm.email,{'attr' : {'class ' : 'form-control'} } )}}
+	</div>
+
+	<div class="w50 mt-3">
+		{{form_label(commandeForm.telephone, "Téléphone : ", {'label_attr' : {'class' : 'input-group-text', 'id' : 'basic-addon1'} } )}}
+		{{form_widget(commandeForm.telephone,{'attr' : {'class ' : 'form-control'} } )}}
+	</div>
+
+	<div class="w50 mt-3">
+		{{form_widget(commandeForm.Reserver,{'attr' : {'class ' : 'btn btn-success'} } )}}
+	</div>
+
+
+	{{form_end(commandeForm)}}
+{% endblock %}

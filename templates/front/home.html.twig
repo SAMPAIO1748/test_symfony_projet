@@ -2,50 +2,6 @@
 
 {% block body %}
 
-	<header>
-
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#">HouseHotel</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarNav">
-					<ul class="navbar-nav">
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="{{ path('home') }}">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Chambre</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Restaurant</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link">Spa</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link">Réservation</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link">Avis</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link">L'hôtel</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link">Actualités</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link">Contact</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-
-	</header>
-
 	<main>
 
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -85,7 +41,7 @@
 				<img src="" alt="chambre">
 				<h2>Chambre</h2>
 				<span>Vener découvrir nos chambres</span>
-				<a href="#" class="btn btn-secondary">Découvrir nos chambre</a>
+				<a href="{{ path('front_chambre_list') }}" class="btn btn-secondary">Découvrir nos chambre</a>
 			</div>
 			<div class="w30">
 				<img src="" alt="restaurant">

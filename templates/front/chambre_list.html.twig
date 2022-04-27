@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	{% for chambre in chambres %}
+
+
+		<div class="w33">
+			<div class="w50">
+				<h2>
+					<a href="{{ path("front_chambre_show", {'id' : chambre.id}) }}">{{ chambre.titre }}</a>
+				</h2>
+				<p>{{ chambre.descriptionCourte }}</p>
+			</div>
+			<div class="w50">
+				<img src="{{ asset('medias/' ~ chambre.photo) }}" alt="{{ chambre.titre }}">
+			</div>
+		</div>
+
+	{% endfor %}
+{% endblock %}
