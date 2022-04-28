@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<form action="" method="post">
+		<div class="mb-3">
+			<label for="exampleFormControlInput1" class="form-label">Email</label>
+			<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+		</div>
+		<div class="mb-3">
+			<label for="exampleFormControlInput2" class="form-label">Nom</label>
+			<input type="text" class="form-control" id="exampleFormControlInput2" placeholder="nom">
+		</div>
+		<div class="mb-3">
+			<label for="exampleFormControlInput3" class="form-label">Prénom</label>
+			<input type="text" class="form-control" id="exampleFormControlInput3" placeholder="prénom">
+		</div>
+		<div class="mb-3">
+			<label for="exampleFormControlInput4" class="form-label">Sujet</label>
+			<input type="text" class="form-control" id="exampleFormControlInput4" placeholder="sujet">
+		</div>
+		<div class="mb-3">
+			<label for="exampleFormControlInput5" class="form-label">Catégorie</label>
+			<select class="form-select" aria-label="Default select example" name="categorie" id="exampleFormControlInput5">
+				<option selected>Choisisez la catégorie</option>
+				<option value="Chambre">Chambre</option>
+				<option value="Restaurant">Restaurant</option>
+				<option value="SPA">Spa</option>
+				<option value="Autre">Autre sujet</option>
+			</select>
+		</div>
+		<div class="mb-3">
+			<label for="exampleFormControlTextarea1" class="form-label">Message</label>
+			<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+		</div>
+		<div class="mb-3">
+			<input type="submit" value="Envoyer" class="btn btn-success">
+		</div>
+	</form>
+
+{% endblock %}
