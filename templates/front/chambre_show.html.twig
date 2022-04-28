@@ -7,7 +7,19 @@
 	<div class="w60">
 		<h2>Equipements et informations</h2>
 		<p>{{ chambre.descriptionLongue }}</p>
+		<a href="{{ path('chambre_like', {'id' : chambre.id } ) }}" class="btn btn-link js-likes">
+
+			{% if app.user and chambre.isLikeByUser(app.user) %}
+				<i class="fas fa-thumbs-up"></i>
+			{% else %}
+				<i class="far fa-thumbs-up"></i>
+			{% endif %}
+
+			<span class="js-likes">{{ chambre.likes | length }}</span>
+			<span class="js-labe">J'aime</span>
+		</a>
 	</div>
+
 
 	<br><br>
 	<hr class="w60">
@@ -49,4 +61,8 @@
 
 
 	{{form_end(commandeForm)}}
+
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+	<script src="{{ asset("js/like.js") }}"></script>
 {% endblock %}

@@ -3,8 +3,10 @@
 namespace App\Controller\Front;
 
 use App\Entity\Commande;
+use App\Entity\Like;
 use App\Form\FrontCommandeType;
 use App\Repository\ChambreRepository;
+use App\Repository\LikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,5 +60,57 @@ class FrontChambreController extends AbstractController
             'chambre' => $chambre,
             'commandeForm' => $commandeForm->createView()
         ]);
+    }
+
+    /**
+     * @Route("like/chambre/{id}", name="chambre_like")
+     */
+    public function likeChambre(
+        $id,
+        ChambreRepository $chambreRepository,
+        EntityManagerInterface $entityManagerInterface,
+        LikeRepository $likeRepository
+    ) {
+        $chambre = $chambreRepository->find($id);
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->json([
+                'code' => 403,
+                'message' => "Vous devez être connecté"
+            ], 403);
+        }
+
+        if ($chambre->isLikeByUser($user)) {
+            $like = $likeRepository->findOneBy(
+                [
+                    'chambre' => $chambre,
+                    'user' => $user
+                ]
+            );
+
+            $entityManagerInterface->remove($like);
+            $entityManagerInterface->flush();
+
+            return $this->json([
+                'code' => 200,
+                'message' => "Le like a bien été supprimé.",
+                'likes' => $likeRepository->count(['chambre' => $chambre])
+            ], 200);
+        }
+
+        $like = new Like();
+
+        $like->setChambre($chambre);
+        $like->setUser($user);
+
+        $entityManagerInterface->persist($like);
+        $entityManagerInterface->flush();
+
+        return $this->json([
+            'code' => 200,
+            'message' => "Nouveau like bien enregistré",
+            'likes' => $likeRepository->count(['chambre' => $chambre])
+        ], 200);
     }
 }

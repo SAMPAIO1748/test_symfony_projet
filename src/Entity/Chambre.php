@@ -54,9 +54,15 @@ class Chambre
      */
     private $commandes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="chambre")
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -164,5 +170,46 @@ class Chambre
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setChambre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getChambre() === $this) {
+                $like->setChambre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isLikeByUser(User $user)
+    {
+        foreach ($this->likes as $like) {
+            if ($like->getUser() == $user) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
