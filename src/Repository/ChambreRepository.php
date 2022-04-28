@@ -23,6 +23,22 @@ class ChambreRepository extends ServiceEntityRepository
         parent::__construct($registry, Chambre::class);
     }
 
+    public function searchByTerm($term)
+    {
+        $queryBuilder = $this->createQueryBuilder('chambre');
+
+        $query = $queryBuilder
+            ->select('chambre')
+            ->where('chambre.titre LIKE :term')
+            ->orWhere('chambre.description_courte LIKE :term')
+            ->orWhere('chambre.description_longue LIKE :term')
+            ->orWhere('chambre.prix_journalier LIKE :term')
+            ->setParameter('term', "%" . $term . "%")
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
     /**
      * @throws ORMException
      * @throws OptimisticLockException

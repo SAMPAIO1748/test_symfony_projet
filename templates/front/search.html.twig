@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<h2>Les chambres qui correspondent à votre recherche : "{{ term }}" sont :</h2>
+
+	{% for chambre in chambres %}
+		<a href="{{ path('front_chambre_show', {'id' : chambre.id }) }}">
+			<h3>{{ chambre.titre }}</h3>
+		</a>
+	{% endfor %}
+
+{% endblock %}
