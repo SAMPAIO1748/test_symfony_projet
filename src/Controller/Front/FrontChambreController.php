@@ -3,9 +3,11 @@
 namespace App\Controller\Front;
 
 use App\Entity\Commande;
+use App\Entity\Dislike;
 use App\Entity\Like;
 use App\Form\FrontCommandeType;
 use App\Repository\ChambreRepository;
+use App\Repository\DislikeRepository;
 use App\Repository\LikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,7 +71,8 @@ class FrontChambreController extends AbstractController
         $id,
         ChambreRepository $chambreRepository,
         EntityManagerInterface $entityManagerInterface,
-        LikeRepository $likeRepository
+        LikeRepository $likeRepository,
+        DislikeRepository $dislikeRepository
     ) {
         $chambre = $chambreRepository->find($id);
         $user = $this->getUser();
@@ -99,6 +102,30 @@ class FrontChambreController extends AbstractController
             ], 200);
         }
 
+        if ($chambre->isDislikeByUser($user)) {
+            $dislike = $dislikeRepository->findOneBy([
+                'chambre' => $chambre,
+                'user' => $user
+            ]);
+
+            $entityManagerInterface->remove($dislike);
+
+            $like = new Like();
+
+            $like->setChambre($chambre);
+            $like->setUser($user);
+
+            $entityManagerInterface->persist($like);
+            $entityManagerInterface->flush();
+
+            return $this->json([
+                'code' => 200,
+                'message' => "Le dislkie a été supprimé et le like a été ajouté",
+                'likes' => $likeRepository->count(['chambre' => $chambre]),
+                'dislikes' => $dislikeRepository->count(['chambre' => $chambre])
+            ], 200);
+        }
+
         $like = new Like();
 
         $like->setChambre($chambre);
@@ -111,6 +138,83 @@ class FrontChambreController extends AbstractController
             'code' => 200,
             'message' => "Nouveau like bien enregistré",
             'likes' => $likeRepository->count(['chambre' => $chambre])
+        ], 200);
+    }
+
+    /**
+     * @Route("/dislike/chambre/{id}", name="dislike_chambre")
+     */
+    public function dislikeChambre(
+        $id,
+        ChambreRepository $chambreRepository,
+        EntityManagerInterface $entityManagerInterface,
+        DislikeRepository $dislikeRepository,
+        LikeRepository $likeRepository
+    ) {
+
+        $chambre = $chambreRepository->find($id);
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->json([
+                'code' => 403,
+                "message" => "Vous être connecté"
+            ], 403);
+        }
+
+        if ($chambre->isDislikeByUser($user)) {
+            $dislike = $dislikeRepository->findOneBy([
+                'chambre' => $chambre,
+                'user' => $user
+            ]);
+
+            $entityManagerInterface->remove($dislike);
+
+            $entityManagerInterface->flush();
+
+            return $this->json([
+                'code' => 200,
+                'message' => "Le dislike a bien été supprimé",
+                'dislikes' => $dislikeRepository->count(['chambre' => $chambre])
+            ], 200);
+        }
+
+        if ($chambre->isLikeByUser($user)) {
+            $like = $likeRepository->findOneBy([
+                'chambre' => $chambre,
+                'user' => $user
+            ]);
+
+            $entityManagerInterface->remove($like);
+
+            $dislike = new Dislike();
+
+            $dislike->setChambre($chambre);
+            $dislike->setUser($user);
+
+            $entityManagerInterface->persist($dislike);
+            $entityManagerInterface->flush();
+
+            return $this->json([
+                'code' => 200,
+                'message' => "Le like a été supprimé et le dislike a été ajouté",
+                'likes' => $likeRepository->count(['chambre' => $chambre]),
+                'dislikes' => $dislikeRepository->count(['chambre' => $chambre])
+            ], 200);
+        }
+
+        $dislike = new Dislike();
+
+        $dislike->setChambre($chambre);
+        $dislike->setUser($user);
+
+        $entityManagerInterface->persist($dislike);
+        $entityManagerInterface->flush();
+
+        return $this->json([
+            'code' => 200,
+            'message' => "Le dislike a bien été ajouté",
+            'dislikes' => $dislikeRepository->count(['chambre' => $chambre])
         ], 200);
     }
 }

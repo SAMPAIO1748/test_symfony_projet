@@ -59,10 +59,16 @@ class Chambre
      */
     private $likes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Dislike::class, mappedBy="chambre")
+     */
+    private $dislikes;
+
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->dislikes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -206,6 +212,47 @@ class Chambre
     {
         foreach ($this->likes as $like) {
             if ($like->getUser() == $user) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return Collection<int, Dislike>
+     */
+    public function getDislikes(): Collection
+    {
+        return $this->dislikes;
+    }
+
+    public function addDislike(Dislike $dislike): self
+    {
+        if (!$this->dislikes->contains($dislike)) {
+            $this->dislikes[] = $dislike;
+            $dislike->setChambre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDislike(Dislike $dislike): self
+    {
+        if ($this->dislikes->removeElement($dislike)) {
+            // set the owning side to null (unless already changed)
+            if ($dislike->getChambre() === $this) {
+                $dislike->setChambre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isDislikeByUser(User $user)
+    {
+        foreach ($this->dislikes as $dislike) {
+            if ($dislike->getUser() === $user) {
                 return true;
             }
         }
